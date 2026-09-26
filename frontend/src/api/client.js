@@ -5,6 +5,7 @@ const api = axios.create({
   timeout: 10000
 });
 
+// Request interceptor: attach JWT token from localStorage
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -13,6 +14,7 @@ api.interceptors.request.use((config) => {
   return config;
 }, (error) => Promise.reject(error));
 
+// Response interceptor: clear token and redirect on 401 Unauthorized
 api.interceptors.response.use(
   (response) => response,
   (error) => {
